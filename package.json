@@ -1,0 +1,11 @@
+{
+  "name": "playwright-remote-examples",
+  "version": "1.0.0",
+  "description": "Examples using Testable as remote Playwright endpoint",
+  "main": "basic.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "1.14.1"
+  }
+}
