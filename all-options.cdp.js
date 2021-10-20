@@ -54,19 +54,38 @@ const { URLSearchParams } = require('url');
             tags: 'Server-1.2.0,Env-QA',
             // How long to keep the session alive after disconnecting (e.g. 2m, 300s, 1h).
             // If unspecified the session ends immediately after disconnecting. Make sure to not close 
-            // the browser if you plan to reconnect
-            keepAlive: ''
-        }).toString();
-        const browser = await chromium.connectOverCDP(
-            `ws://ec2-3-16-162-61.us-east-2.compute.amazonaws.com:8080/cdp?${params}`,
+            // the browser if you plan to reconnect.
+            keepAlive: '1m'
+        });
+        let browser = await chromium.connectOverCDP(
+            `wss://dev.testable.io:8088/cdp?${params.toString()}`,
             { timeout: 0 });
-        const page = await browser.newPage();
+        let page = await browser.newPage();
         await page.setViewportSize({ width: 400, height: 1000 });
 
-        await page.goto('https://iowa.rivals.com');
+        await page.goto('https://www.google.com');
         await page.waitForTimeout(1000);
 
         await page.screenshot({ path: 'test.png' });
+
+        // get the sessionId so we can reconnect to the same session
+        const sessionId = (await page.evaluate(function testable_info() {})).sessionId;
+        console.log(`Session ID: ${sessionId}`);
+
+        // disconnect
+        browser.close();
+        await sleep(1000);
+
+        params.set('sessionId', sessionId);
+        browser = await chromium.connectOverCDP(
+            `wss://dev.testable.io:8088/cdp?${params.toString()}`,
+            { timeout: 0 });
+
+        page = (await browser.pages())[0];
+        await page.goto('https://amazon.com');
+        await page.waitForTimeout(1000);
+        await page.screenshot({ path: 'amazon.png' });
+
         browser.close();
     } catch (err) {
         console.log(err);

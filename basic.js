@@ -11,10 +11,12 @@ const { URLSearchParams } = require('url');
             // browser version (e.g. latest, latest-1, 90)
             browserVersion: 'latest',
             // size of the display (WxH)
-            screenResolution: '1920x1080'
+            screenResolution: '1920x1080',
+            // TODO region info
+            //region: 'aws-us-east-1'
         }).toString();
         const browser = await chromium.connect(
-            `ws://ec2-3-16-162-61.us-east-2.compute.amazonaws.com:8080/playwright?${params}`,
+            `wss://dev.testable.io:8088/playwright?${params}`,
             { timeout: 0 });
         const page = await browser.newPage();
         await page.setViewportSize({ width: 1920, height: 1080 });

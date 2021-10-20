@@ -16,11 +16,14 @@ const { URLSearchParams } = require('url');
             logCommands: true
         }).toString();
         const browser = await chromium.connect(
-            `ws://ec2-3-16-162-61.us-east-2.compute.amazonaws.com:8080/playwright?${params}`,
+            `wss://dev.testable.io:8088/playwright?${params}`,
             { timeout: 0 });
         const page = await browser.newPage();
         await page.setViewportSize({ width: 1920, height: 1080 });
 
+        // Returns Testable information related to this run: { executionId, sessionId }
+        // If you specified a keepAlive time, use the sessionId as a parameter when reconnecting.
+        // The executionId allows you to retrieve information about this run via the API or front-end.
         const info = await page.evaluate(function testable_info() {});
         console.log(`Testable info: ${JSON.stringify(info)}`);
 
