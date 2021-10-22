@@ -12,10 +12,12 @@ const { URLSearchParams } = require('url');
             // browser version (e.g. latest, latest-1, 90)
             browserVersion: 'latest',
             // size of the display (WxH)
-            screenResolution: '1920x1080'
+            screenResolution: '1920x1080',
+            // The region in which to run your test (use our remote configurator to see the full list of options)
+            region: 'aws-us-east-1'
         }).toString();
         const browser = await chromium.connectOverCDP(
-            `wss://dev.testable.io:8088/cdp?${params}`,
+            `wss://cdp.testable.io?${params}`,
             { timeout: 0 });
         const page = await browser.newPage();
         await page.setViewportSize({ width: 1920, height: 1080 });

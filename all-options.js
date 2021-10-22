@@ -12,9 +12,9 @@ function sleep(ms) {
         const params = new URLSearchParams({
             // API key (Org Management => API Keys)
             key: process.env.TESTABLE_KEY,
-            // Browser name: chrome, edge, firefox 
+            // browser name: chrome, edge, firefox 
             browserName: 'chrome',
-            // Browser version (e.g. latest, latest-1, 90)
+            // browser version (e.g. latest, latest-1, 90)
             browserVersion: 'latest-1',
             // Size of the display (WxH). Defaults from the device details if not specified.
             screenResolution: '400 x 1000',
@@ -65,8 +65,8 @@ function sleep(ms) {
             // the browser if you plan to reconnect.
             keepAlive: '1m'
         });
-        let browser = await chromium.connectOverCDP(
-            `wss://cdp.testable.io?${params.toString()}`,
+        let browser = await chromium.connect(
+            `wss://playwright.testable.io?${params.toString()}`,
             { timeout: 0 });
         let page = await browser.newPage();
         await page.setViewportSize({ width: 400, height: 1000 });
@@ -81,13 +81,13 @@ function sleep(ms) {
         console.log(`Session ID: ${sessionId}`);
 
         // disconnect and sleep 1 second
-        await browser.close();
+        browser.close();
         await sleep(1000);
 
         // reconnect to the same session
         params.set('sessionId', sessionId);
-        browser = await chromium.connectOverCDP(
-            `wss://cdp.testable.io?${params.toString()}`,
+        browser = await chromium.connect(
+            `wss://playwright.testable.io?${params.toString()}`,
             { timeout: 0 });
 
         page = await browser.newPage();
@@ -95,7 +95,7 @@ function sleep(ms) {
         await page.waitForTimeout(1000);
         await page.screenshot({ path: 'amazon.png' });
 
-        await browser.close();
+        browser.close();
     } catch (err) {
         console.log(err);
     }
