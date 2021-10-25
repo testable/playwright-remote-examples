@@ -69,7 +69,7 @@ function sleep(ms) {
             playwrightVersion: '1.15.2'
         });
         let browser = await chromium.connect(
-            `wss://playwright.testable.io?${params.toString()}`,
+            `wss://playwright.testable.io?${params}`,
             { timeout: 0 });
         let page = await browser.newPage();
         await page.setViewportSize({ width: 400, height: 1000 });
@@ -90,7 +90,7 @@ function sleep(ms) {
         // reconnect to the same session
         params.set('sessionId', sessionId);
         browser = await chromium.connect(
-            `wss://playwright.testable.io?${params.toString()}`,
+            `wss://playwright.testable.io?${params}`,
             { timeout: 0 });
 
         page = await browser.newPage();

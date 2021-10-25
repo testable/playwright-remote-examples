@@ -6,6 +6,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "playwright": "1.15.0"
+    "playwright": "1.16.1"
   }
 }

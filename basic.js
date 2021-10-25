@@ -22,7 +22,7 @@ const { URLSearchParams } = require('url');
         await page.setViewportSize({ width: 1920, height: 1080 });
         
         await page.goto('https://google.com');
-        await page.waitForTimeout(5000);
+        await page.waitForTimeout(1000);
 
         await page.screenshot({ path: 'test.png' });
         await browser.close();
