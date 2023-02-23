@@ -2,6 +2,7 @@ const { chromium } = require('playwright');
 const { URLSearchParams } = require('url');
 
 (async () => {
+    let browser;
     try {
         const params = new URLSearchParams({
             // API key (Org Management => API Keys)
@@ -15,7 +16,7 @@ const { URLSearchParams } = require('url');
             // The region in which to run your test (use our remote configurator to see the full list of options)
             region: 'aws-us-east-1'
         }).toString();
-        const browser = await chromium.connect(
+        browser = await chromium.connect(
             `wss://playwright.testable.io?${params}`,
             { timeout: 0 });
         const page = await browser.newPage();
@@ -23,10 +24,12 @@ const { URLSearchParams } = require('url');
         
         await page.goto('https://google.com');
         await page.waitForTimeout(1000);
-
         await page.screenshot({ path: 'test.png' });
+
         await browser.close();
     } catch (err) {
         console.log(err);
+        if (browser)
+            browser.close();
     }
 })();
