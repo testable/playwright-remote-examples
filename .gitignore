@@ -104,3 +104,7 @@ dist
 .tern-port
 
 .DS*
+
+.vscode/
+
+*.png

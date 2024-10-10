@@ -15,7 +15,7 @@ function sleep(ms) {
             // browser name: chrome, edge, firefox 
             browserName: 'chrome',
             // browser version (e.g. latest, latest-1, 90)
-            browserVersion: 'latest-1',
+            browserVersion: 'latest',
             // Size of the display (WxH). Defaults from the device details if not specified.
             screenResolution: '400 x 1000',
             // The region in which to run your test (use our remote configurator to see the full list of options)
@@ -66,7 +66,7 @@ function sleep(ms) {
             keepAlive: '1m',
             // Should match the version of Playwright you are using. If not specified, defaults to
             // the version which supports the chosen browser version.
-            playwrightVersion: '1.15.2'
+            playwrightVersion: '1.47.2'
         });
         let browser = await chromium.connect(
             `wss://playwright.testable.io?${params}`,
