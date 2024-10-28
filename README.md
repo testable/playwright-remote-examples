@@ -11,7 +11,11 @@ This repository contains several examples to help you run Playwright and utilize
 
 ### Examples
 
-Examples are provided both for connecting via CDP (Chrome DevTools Protocol) as well as with a Playwright websocket.
+Examples are provided both for connecting a Playwright Test framework test suite, via CDP (Chrome DevTools Protocol), and via a Playwright websocket.
+
+**Playwright Test**:
+
+Run `npx playwright install` and then `npx playwright test`. It will run the `tests/example.spec.ts` spec according to `playwright.config.ts` against browser(s) launched on a Testable test runner in AWS N Virginia.
 
 **CDP Examples**:
 
