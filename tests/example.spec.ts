@@ -1,14 +1,4 @@
-import { expect } from '@playwright/test';
-import { createFixture as createTestableFixture } from 'testable-playwright-test';
-
-const test = createTestableFixture({
-    serverUrl: 'wss://playwright.testable.io/',
-    key: process.env.TESTABLE_KEY,
-    testCaseName: 'Support Team Remote Playwright Tests',
-    reportId: 'Remote Playwright Tests',
-    region: 'aws-us-east-1',
-    screenshot: 'afterFailed'
-});
+import { expect, test } from '@playwright/test';
 
 test('has title', async ({ page }) => {
   await page.goto('https://google.com/');

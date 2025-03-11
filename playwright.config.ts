@@ -1,4 +1,5 @@
-const { defineConfig, devices } = require('@playwright/test');
+const { devices } = require('@playwright/test');
+const { defineConfig } = require('testable-playwright-test');
 
 export default defineConfig({
   testDir: './tests',
@@ -8,9 +9,6 @@ export default defineConfig({
   reporter: [
     ['html', { open: 'never' }]
   ],
-  metadata: {
-    tags: process.env.RESULTS_TAGS || `test-${Date.now()}`
-  },
   use: {
     trace: 'on-first-retry'
   },
@@ -20,4 +18,10 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     }
   ]
+}, {
+  serverUrl: 'wss://playwright.testable.io/',
+  key: process.env.TESTABLE_KEY,
+  testCaseName: 'Support Team Remote Playwright Tests',
+  region: 'aws-us-east-1',
+  screenshot: 'afterFailed'
 });
